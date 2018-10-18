@@ -60,7 +60,7 @@ return [
      */
 
     'Referrer-Policy' => 'no-referrer',
-    'Content-Type' => 'application/json',
+    // 'Content-Type' => 'application/json',
     'Access-Control-Allow-Origin' => '*',
     'Access-Control-Allow-Headers' => 'X-Requested-With, Content-Type, Accept, Origin, Authorization',
     'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, PATCH, OPTIONS'

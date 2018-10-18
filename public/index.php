@@ -78,7 +78,7 @@ set_secure_headers();
 /* end headers */
 
 /* Filter superglobals */
-sanitizeglobals();
+// sanitizeglobals();
 /* end superglobals */
 
 /* Dispatch the router */

@@ -2,12 +2,16 @@
 
 namespace App\Controllers;
 
-class HomeController
+use App\Controllers\Controller;
+use Zend\Diactoros\Response\JsonResponse;
+
+class HomeController extends Controller
 {
-    public function index()
+    public function home()
     {
-        echo 'Welcome to PHP API by ferdie!';
+        return new JsonResponse(['data' => 'Welcome to PHP API by ferdie!']);
     }
+
     public function send_mail()
     {
         ob_start();

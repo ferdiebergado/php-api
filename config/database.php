@@ -2,7 +2,7 @@
 return [
   'host' => 'localhost',
   'port' => '3306',
-  'dbname' => 'phpnofwapi',
+  'dbname' => 'phpapi',
   'charset' => 'utf8mb4',
   'username' => 'ferdie',
   'password' => 'stephferdie0218',

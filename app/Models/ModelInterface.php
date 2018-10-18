@@ -1,8 +1,9 @@
 <?php
 
-namespace Core;
+namespace App\Models;
 
-interface ModelInterface {
+interface ModelInterface
+{
     // public function all();
     public function find($id);
     // public function findByField($field, $operator = '=', $value);

@@ -1,23 +1,22 @@
 <?php
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\Controller;
 use App\Models\User;
-use App\Services\UserService;
+// use App\Services\UserService;
 
-class UserController extends BaseController
+class UserController extends Controller
 {
-    private $service;
+    // private $service;
 
-    public function __construct(UserService $service)
-    {
-        $this->middleware('auth', 'active');
-        $this->service = $service;
-    }
+    // public function __construct(UserService $service)
+    // {
+    //     $this->service = $service;
+    // }
 
-    public function show($id)
+    public function show()
     {
-        return $this->service->show($id);
+        return $this->model->find(1);
     }
 
     public function edit()

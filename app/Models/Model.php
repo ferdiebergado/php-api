@@ -1,10 +1,10 @@
 <?php
-namespace Core;
+namespace App\Models;
 
-use \Core\ModelInterface;
+use App\Models\ModelInterface;
 use ParagonIE\EasyDB\EasyDB;
 
-class BaseModel implements ModelInterface
+class Model implements ModelInterface
 {
     protected $db;
     protected $table;

@@ -1,28 +1,28 @@
-<?php
+<?php declare (strict_types = 1);
 
-$container = new Dice\Dice;
+use League\Container\Definition\Definition;
+use App\Controllers\Controller;
+use App\Models\Model;
+use ParagonIE\EasyDB\EasyDB;
 
 $db = require(CONFIG_PATH . 'database.php');
 $dsn = "mysql:host=" . $db['host'] . ";port=" . $db['port'] . ";dbname=" . $db['dbname'] . ";charset=" . $db['charset'];
 
-$pdorule = [
-         //Mark the class as shared so the same instance is returned each time
-    'shared' => true,
-
-         //The constructor arguments that will be supplied when the instance is created
-    'constructParams' => [$dsn, $db['username'], $db['password'], $db['options']]
+$definitions = [
+    (new Definition(Controller::class))->addArgument(Model::class),
+    (new Definition(EasyDB::class))->addArgument(PDO::class),
+    (new Definition(Model::class))->addArgument(EasyDB::class),
+    (new Definition(PDO::class))
+        ->addArgument($dsn)
+        ->addArgument($db['username'])
+        ->addArgument($db['password'])
+        ->addArgument($db['options'])
+        ->setShared()
 ];
 
-//Apply the rule to the PDO class
-$container->addRule('PDO', $pdorule);
+$aggregate = new League\Container\Definition\DefinitionAggregate($definitions);
+$container = new League\Container\Container($aggregate);
 
-//Now any time PDO is requested from Dice, the same instance will be returned
-//And will havebeen constructed with the arugments supplied in 'constructParams'
-
-$container->create('PDO');
-
-$container->create('Core\\BaseModel');
-$container->create('App\\Models\\User');
-$container->create('ParagonIE\\EasyDB\\EasyDB');
+// $controller = $container->get(App\Controllers\Controller::class);
 
 return $container;

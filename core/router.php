@@ -18,19 +18,17 @@ $responseFactory = new Http\Factory\Diactoros\ResponseFactory;
 $strategy = new League\Route\Strategy\JsonStrategy($responseFactory);
 $router = (new League\Route\Router)->setStrategy($strategy);
 
-// map a route
-$router->map('GET', '/', function (ServerRequestInterface $request) : array {
-    return [
-        'title' => 'PHP API by Ferdinand Saporas Bergado <ferdiebergado@gmail.com>',
-        'version' => 1,
-    ];
-});
+$namespace = 'App\\Controllers\\';
 
-$router->map('GET', '/user', function (ServerRequestInterface $request) : array {
-    return [
-        'username' => 'Ferdinand Saporas Bergado'
-    ];
-})->middleware(new App\Middlewares\AuthMiddleware);
+// map a route
+$router->map('GET', '/', $namespace . 'HomeController::home');
+$router->map('GET', '/user', $namespace . 'UserController::show');
+
+// $router->map('GET', '/user', function (ServerRequestInterface $request) : array {
+//     return [
+//         'username' => 'Ferdinand Saporas Bergado'
+//     ];
+// })->middleware(new App\Middlewares\AuthMiddleware);
 
 $response = $router->dispatch($request);
 
