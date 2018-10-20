@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function show()
     {
-        return $this->model->find(1);
+        return User::find(1);
     }
 
     public function edit()

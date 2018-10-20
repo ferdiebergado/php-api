@@ -5,7 +5,7 @@ namespace App\Models;
 interface ModelInterface
 {
     // public function all();
-    public function find($id);
+    public static function find($id);
     // public function findByField($field, $operator = '=', $value);
     // public function findWhere($where);
     // public function latest($date);

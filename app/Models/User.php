@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Core\BaseModel;
-use Core\SessionManager;
-use PDO;
-use App\Services\UserService;
+// use Core\SessionManager;
+use App\Models\Model;
+// use App\Services\UserService;
 
-class User extends BaseModel
+class User extends Model
 {
-    protected $guarded = [
+    protected static $guarded = [
         'password'
     ];
 
@@ -28,21 +27,21 @@ class User extends BaseModel
     //     return $updated;
     // }
 
-    public function login($email, $password) {
+    public function login($email, $password)
+    {
         $user = $this->db->row("SELECT * FROM users WHERE email = :email AND active = true", $email);
         $hash = $user['password'];
-        if(isset($user['id']) && password_verify($password, $hash)) {
+        if (isset($user['id']) && password_verify($password, $hash)) {
             if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
                 $newhash = password_hash($password, PASSWORD_DEFAULT);
                 $this->update($user['id'], ['password' => $newhash]);
             }
             $this->update($user['id'], ['last_login' => date(DATE_FORMAT_SHORT)]);
             $user = $this->guard($this->find($user['id']));
-            UserService::updateSession($user);
-            cache_remember('user_'.$user['id'], 30, $user);
+            // UserService::updateSession($user);
+            cache_remember('user_' . $user['id'], 30, $user);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

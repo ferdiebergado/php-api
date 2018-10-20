@@ -48,14 +48,15 @@ require_once VENDOR_PATH . 'autoload.php';
 
 /* Register the error handler */
 error_reporting(E_ALL);
-$whoops = new Whoops\Run;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Handler\JsonResponseHandler;
+
+$whoops = new Whoops\Run;
 
 if (config('debug_mode')) {
     $whoops->pushHandler(new JsonResponseHandler);
 } else {
-    $whoops->pushHandler(function ($e) use (&$whoops) {
+    $whoops->pushHandler(function ($e) use ($whoops) {
         $whoops->allowQuit(false);
         $whoops->writeToOutput(false);
         $whoops->pushHandler(new PrettyPageHandler);
@@ -70,7 +71,8 @@ $whoops->register();
 /* end error handler */
 
 /* Initialize the dependency injection container */
-$container = require_once(CORE_PATH . 'container.php');
+// $container = require_once(CORE_PATH . 'container.php');
+$container = require_once(CORE_PATH . 'dependencies.php');
 /* end container */
 
 /* Set security headers */

@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS phpnofwapi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE phpnofwapi;
+CREATE DATABASE IF NOT EXISTS phpapi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE phpapi;
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL auto_increment,

@@ -9,7 +9,9 @@ class HomeController extends Controller
 {
     public function home()
     {
-        return new JsonResponse(['data' => 'Welcome to PHP API by ferdie!']);
+        return [
+            'data' => 'Welcome to PHP API by ferdie!'
+        ];
     }
 
     public function send_mail()

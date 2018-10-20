@@ -2,35 +2,13 @@
 
 /*** Application Router ***/
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+$router = $container->get('router');
+$routes = (require_once CONFIG_PATH . 'routes.php');
+foreach ($routes as $route) {
+    $router->map($route[0], $route[1], $route[2] . '::' . $route[3]);
+}
 
-$request = Zend\Diactoros\ServerRequestFactory::fromGlobals(
-    $_SERVER,
-    $_GET,
-    $_POST,
-    $_COOKIE,
-    $_FILES
-);
-
-$responseFactory = new Http\Factory\Diactoros\ResponseFactory;
-
-$strategy = new League\Route\Strategy\JsonStrategy($responseFactory);
-$router = (new League\Route\Router)->setStrategy($strategy);
-
-$namespace = 'App\\Controllers\\';
-
-// map a route
-$router->map('GET', '/', $namespace . 'HomeController::home');
-$router->map('GET', '/user', $namespace . 'UserController::show');
-
-// $router->map('GET', '/user', function (ServerRequestInterface $request) : array {
-//     return [
-//         'username' => 'Ferdinand Saporas Bergado'
-//     ];
-// })->middleware(new App\Middlewares\AuthMiddleware);
-
-$response = $router->dispatch($request);
+$response = $router->dispatch($container->get('request'));
 
 // send the response to the browser
-(new Zend\Diactoros\Response\SapiEmitter)->emit($response);
+$container->get('emitter')->emit($response);

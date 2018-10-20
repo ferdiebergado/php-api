@@ -6,22 +6,22 @@ use ParagonIE\EasyDB\EasyDB;
 
 class Model implements ModelInterface
 {
-    protected $db;
-    protected $table;
+    protected static $db;
+    protected static $table;
     protected $fillable;
-    protected $guarded;
+    protected static $guarded;
 
     public function __construct(EasyDB $db)
     {
-        $this->db = $db;
-        if (empty($this->table)) {
-            $this->table = strtolower(str_replace('App\\Models\\', '', (\get_class($this)))) . 's';
+        self::$db = $db;
+        if (empty(self::$table)) {
+            self::$table = strtolower(str_replace('App\\Models\\', '', (\get_class(self)))) . 's';
         }
     }
 
-    public function find($id)
+    public static function find($id)
     {
-        return $this->guard($this->db->row("SELECT * FROM $this->table WHERE id = ?", [$id]));
+        return self::guard(self::$db->row("SELECT * FROM " . self::$table . " WHERE id = ?", [$id]));
     }
 
     public function update($id, array $fields)
@@ -29,9 +29,9 @@ class Model implements ModelInterface
         return $this->db->update($this->table, $fields, ['id' => $id]);
     }
 
-    public function guard($array)
+    public static function guard($array)
     {
-        foreach ($this->guarded as $guard) {
+        foreach (self::$guarded as $guard) {
             unset($array[$guard]);
         }
         return $array;
